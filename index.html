@@ -35,13 +35,14 @@
           colors: {
             brand: {
               gold: '#E7B257',
-              green: '#A1AE71',
-              steel: '#8597A9',  /* slate blue */
-              clay: '#9A5B52',   /* brick */
-              slate: '#2C343C',
+              olive: '#A1AE71',
+              'slate-blue': '#8597A9',
+              brick: '#9A5B52',
               gray: '#585F66',
+              white: '#FAF9F4',
+              /* Derived colors for better contrast and design */
+              slate: '#2C343C',
               ivory: '#EAE9E2',
-              off: '#FAF9F4',
             }
           },
           boxShadow: {
@@ -49,7 +50,7 @@
           },
           backgroundImage: {
             grid: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.07) 1px, transparent 0)',
-            engine: 'conic-gradient(from 180deg at 50% 50%, rgba(231,178,87,0.12), rgba(161,174,113,0.12), rgba(133,151,169,0.12), rgba(154,91,82,0.12))'
+            engine: 'conic-gradient(from 180deg at 50% 50%, rgba(231,178,87,0.18), rgba(161,174,113,0.15), rgba(133,151,169,0.15), rgba(154,91,82,0.15))'
           }
         }
       }
@@ -60,11 +61,12 @@
     :root {
       --gold: #E7B257;
       --olive: #A1AE71;
-      --steel: #8597A9;
-      --clay: #9A5B52;
+      --slate-blue: #8597A9;
+      --brick: #9A5B52;
       --gray: #585F66;
+      --white: #FAF9F4;
+      /* Derived colors for better contrast */
       --slate: #2C343C;
-      --off: #FAF9F4;
     }
 
     /* Subtle grid + linen noise background */
@@ -120,14 +122,17 @@
       isolation: isolate;
       border-radius: 0.9rem;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .38)),
-        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .22) 0%, transparent 60%),
-        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .14) 0%, transparent 60%);
-      border: 1px solid rgba(231, 178, 87, .55);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      backdrop-filter: blur(12px) saturate(160%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65);
-      transition: transform .18s ease, filter .18s ease, background .2s ease, border-color .2s ease;
+        linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .45)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .28) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .18) 0%, transparent 60%),
+        radial-gradient(100% 100% at 50% 100%, rgba(133, 151, 169, .12) 0%, transparent 50%);
+      border: 1px solid rgba(231, 178, 87, .65);
+      -webkit-backdrop-filter: blur(12px) saturate(170%);
+      backdrop-filter: blur(12px) saturate(170%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .7),
+        0 4px 20px -4px rgba(231, 178, 87, .25);
+      transition: transform .18s ease, filter .18s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
 
     .btn-glass::before {
@@ -137,10 +142,10 @@
       border-radius: inherit;
       pointer-events: none;
       mix-blend-mode: soft-light;
-      opacity: .85;
+      opacity: .9;
       background:
-        linear-gradient(120deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .3) 42%, rgba(255, 255, 255, 0) 60%),
-        conic-gradient(from 180deg at 50% 0%, rgba(231, 178, 87, .22), rgba(133, 151, 169, .12), rgba(154, 91, 82, .12), rgba(231, 178, 87, .22));
+        linear-gradient(120deg, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, .4) 42%, rgba(255, 255, 255, 0) 60%),
+        conic-gradient(from 180deg at 50% 0%, rgba(231, 178, 87, .25), rgba(161, 174, 113, .15), rgba(133, 151, 169, .15), rgba(154, 91, 82, .15), rgba(231, 178, 87, .25));
     }
 
     .btn-glass::after {
@@ -149,19 +154,23 @@
       inset: 0;
       border-radius: inherit;
       pointer-events: none;
-      opacity: .65;
-      background: radial-gradient(80% 60% at 50% -20%, rgba(255, 255, 255, .95), transparent 60%);
+      opacity: .7;
+      background: radial-gradient(80% 60% at 50% -20%, rgba(255, 255, 255, .98), transparent 60%);
       transition: opacity .25s ease, transform .25s ease;
     }
 
     .btn-glass:hover {
       transform: translateY(-1px);
-      filter: saturate(115%);
+      filter: saturate(125%);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, .82), rgba(255, 255, 255, .44)),
-        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .32) 0%, transparent 60%),
-        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .18) 0%, transparent 60%);
-      border-color: rgba(231, 178, 87, .75);
+        linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .52)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .38) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .25) 0%, transparent 60%),
+        radial-gradient(100% 100% at 50% 100%, rgba(133, 151, 169, .18) 0%, transparent 50%);
+      border-color: rgba(231, 178, 87, .85);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .8),
+        0 8px 25px -6px rgba(231, 178, 87, .35);
     }
 
     .btn-glass:active {
@@ -193,16 +202,16 @@
       width: 520px;
       height: 520px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(231, 178, 87, .45), rgba(231, 178, 87, 0) 60%),
-        radial-gradient(circle at 70% 70%, rgba(161, 174, 113, .35), rgba(161, 174, 113, 0) 60%);
+        radial-gradient(circle at 30% 30%, rgba(231, 178, 87, .5), rgba(231, 178, 87, 0) 60%),
+        radial-gradient(circle at 70% 70%, rgba(161, 174, 113, .4), rgba(161, 174, 113, 0) 60%);
     }
 
     .px-l2 {
       width: 380px;
       height: 380px;
       background:
-        radial-gradient(circle at 60% 40%, rgba(133, 151, 169, .40), rgba(133, 151, 169, 0) 65%),
-        radial-gradient(circle at 30% 70%, rgba(154, 91, 82, .25), rgba(154, 91, 82, 0) 70%);
+        radial-gradient(circle at 60% 40%, rgba(133, 151, 169, .45), rgba(133, 151, 169, 0) 65%),
+        radial-gradient(circle at 30% 70%, rgba(154, 91, 82, .35), rgba(154, 91, 82, 0) 70%);
     }
 
     .px-l3 {
@@ -219,10 +228,12 @@
       --gap: 3rem;
       position: relative;
       overflow: hidden;
-      border-top: 1px solid rgba(88, 95, 102, .2);
-      border-bottom: 1px solid rgba(88, 95, 102, .2);
-      background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, .3));
-      backdrop-filter: blur(8px) saturate(140%);
+      border-top: 1px solid rgba(231, 178, 87, .3);
+      border-bottom: 1px solid rgba(231, 178, 87, .3);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .65), rgba(255, 255, 255, .45)),
+        linear-gradient(90deg, rgba(231, 178, 87, .05) 0%, rgba(161, 174, 113, .05) 50%, rgba(133, 151, 169, .05) 100%);
+      backdrop-filter: blur(12px) saturate(150%);
     }
 
     .ticker::before,
@@ -237,12 +248,12 @@
 
     .ticker::before {
       left: 0;
-      background: linear-gradient(to right, rgba(250, 249, 244, 1), rgba(250, 249, 244, 0));
+      background: linear-gradient(to right, #FAF9F4, rgba(250, 249, 244, 0));
     }
 
     .ticker::after {
       right: 0;
-      background: linear-gradient(to left, rgba(250, 249, 244, 1), rgba(250, 249, 244, 0));
+      background: linear-gradient(to left, #FAF9F4, rgba(250, 249, 244, 0));
     }
 
     .ticker-track {
@@ -264,11 +275,25 @@
       gap: .5rem;
       border-radius: 9999px;
       padding: .5rem .9rem;
-      background: rgba(255, 255, 255, .5);
-      border: 1px solid rgba(255, 255, 255, .45);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75), 0 6px 16px -8px rgba(44, 52, 60, .25);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .45)),
+        radial-gradient(200% 100% at 50% 0%, rgba(231, 178, 87, .08) 0%, transparent 50%);
+      border: 1px solid rgba(231, 178, 87, .25);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .8),
+        0 6px 16px -8px rgba(231, 178, 87, .2),
+        0 2px 8px -4px rgba(133, 151, 169, .15);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      transition: all .2s ease;
+    }
+
+    .chip:hover {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .55)),
+        radial-gradient(200% 100% at 50% 0%, rgba(231, 178, 87, .15) 0%, transparent 50%);
+      border-color: rgba(231, 178, 87, .4);
+      transform: translateY(-1px);
     }
 
     @keyframes scroll {
@@ -283,7 +308,7 @@
 
     /* Brand gradient text */
     .text-gradient {
-      background: linear-gradient(90deg, #E7B257 0%, #A1AE71 40%, #9A5B52 100%);
+      background: linear-gradient(120deg, #E7B257 0%, #A1AE71 35%, #8597A9 65%, #9A5B52 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent
@@ -308,48 +333,7 @@
       display: inline-block;
       margin-left: 2px;
       animation: blink 1s step-end infinite;
-      color: var(--gold)
-    }
-
-    .traffic-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 9999px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 0 0 1px rgba(0, 0, 0, .12)
-    }
-
-    .dot-red {
-      background: #ff5f56
-    }
-
-    .dot-yellow {
-      background: #ffbd2e
-    }
-
-    .dot-green {
-      background: #27c93f
-    }
-
-    /* iTerm-like terminal bits */
-    @keyframes blink {
-
-      0%,
-      49%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: 0
-      }
-    }
-
-    .caret::after {
-      content: "▍";
-      display: inline-block;
-      margin-left: 2px;
-      animation: blink 1s step-end infinite;
-      color: var(--gold)
+      color: #E7B257;
     }
 
     .traffic-dot {
@@ -379,7 +363,7 @@
 </head>
 
 <body
-  class="font-serif min-h-screen bg-brand-off text-brand-slate selection:bg-brand-gold/60 selection:text-brand-slate">
+  class="font-serif min-h-screen bg-brand-white text-brand-slate selection:bg-brand-gold/60 selection:text-brand-slate">
   <!-- Skip link -->
   <a href="#main"
     class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-white/90 focus:backdrop-blur focus:rounded-md focus:px-3 focus:py-2 focus:ring focus:ring-brand-gold/60">Skip
@@ -387,31 +371,21 @@
 
   <!-- Header -->
   <header id="header"
-    class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/80 border-b border-brand-gray/20">
+    class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-brand-white/75 bg-brand-white/85 border-b border-brand-gold/25">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <a href="#home" class="flex items-center gap-2 group" aria-label="Difference Engine home">
-          <!-- Monogram evoking a geared frame -->
-          <svg class="h-7 w-7 text-brand-gold group-hover:rotate-6 transition" viewBox="0 0 48 48" fill="none"
-            aria-hidden="true">
-            <defs>
-              <linearGradient id="gear" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#E7B257" />
-                <stop offset="100%" stop-color="#A1AE71" />
-              </linearGradient>
-            </defs>
-            <rect x="6" y="6" width="36" height="36" rx="8" stroke="url(#gear)" stroke-width="3" />
-            <path d="M16 17h9m7 0h-7v14h7m-23 0h9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-          </svg>
+          <img src="img/Logo-square.png" alt="Difference Engine"
+            class="h-7 w-7 rounded-md shadow-sm group-hover:rotate-6 transition" />
           <span class="font-extrabold tracking-tight text-lg">Difference&nbsp;Engine</span>
         </a>
 
         <nav class="hidden md:flex items-center gap-8 text-sm">
-          <a href="#services" class="hover:text-brand-gold">Services</a>
+          <!-- <a href="#services" class="hover:text-brand-gold">Services</a>
           <a href="#work" class="hover:text-brand-gold">Work</a>
           <a href="#approach" class="hover:text-brand-gold">Approach</a>
           <a href="#about" class="hover:text-brand-gold">About</a>
-          <a href="#contact" class="hover:text-brand-gold">Contact</a>
+          <a href="#contact" class="hover:text-brand-gold">Contact</a> -->
         </nav>
 
         <div class="flex items-center gap-3">
@@ -467,9 +441,9 @@
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#contact" class="inline-flex items-center gap-2 btn-glass pop px-5 py-3 text-brand-slate"><span
                 class="btn-aura" aria-hidden="true"></span>Let's talk<span aria-hidden>→</span></a>
-            <a href="#work"
+            <!-- <a href="#work"
               class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-5 py-3 hover:bg-brand-ivory">See
-              work</a>
+              work</a> -->
           </div>
           <div class="mt-10 flex items-center gap-6 text-xs text-brand-gray">
             <div class="flex items-center gap-2"><svg class="icon" viewBox="0 0 24 24" fill="none"
@@ -500,7 +474,7 @@
                   <span class="traffic-dot dot-green"></span>
                   <span class="text-xs opacity-70 ml-2">iTerm — ~/projects/difference-engine</span>
                 </div>
-                <span class="text-xs text-brand-gold">zsh</span>
+                <span class="text-xs" style="color: #E7B257;">zsh</span>
               </div>
               <!-- Terminal output -->
               <div class="bg-[#0b1220] text-white term-box">
@@ -528,14 +502,14 @@
           </svg>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <img data-speed="0.06" src="https://cdn.pixabay.com/photo/2021/05/12/15/37/duluth-6248635_1280.jpg"
-            alt="Lake Superior North Shore" class="h-28 w-full object-cover rounded-lg" />
-          <img data-speed="0.10" src="https://cdn.pixabay.com/photo/2016/11/14/23/54/minneapolis-1824972_1280.jpg"
-            alt="Stone Arch Bridge, Minneapolis" class="h-28 w-full object-cover rounded-lg" />
-          <img data-speed="0.14" src="https://cdn.pixabay.com/photo/2016/04/24/18/20/waterfall-1350320_1280.jpg"
-            alt="Boundary Waters pines and water" class="h-28 w-full object-cover rounded-lg" />
-          <img data-speed="0.12" src="https://cdn.pixabay.com/photo/2013/06/19/19/51/saint-paul-140199_1280.jpg"
-            alt="Prairie and sky in western Minnesota" class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.06" src="img/duluth-6248635_1280.jpg" alt="Lake Superior North Shore"
+            class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.10" src="img/minneapolis-1824972_1280.jpg" alt="Stone Arch Bridge, Minneapolis"
+            class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.14" src="img/waterfall-1350320_1280.jpg" alt="Boundary Waters pines and water"
+            class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.12" src="img/saint-paul-140199_1280.jpg" alt="Prairie and sky in western Minnesota"
+            class="h-28 w-full object-cover rounded-lg" />
         </div>
       </div>
     </div>
@@ -650,7 +624,7 @@
         </p>
       </header>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
@@ -660,7 +634,7 @@
           <p class="mt-3 text-sm text-brand-gray">React/Next.js, Node, Python, GraphQL/REST, PostgreSQL. Scalable,
             observable, secure.</p>
         </article>
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8" />
@@ -670,7 +644,7 @@
           <p class="mt-3 text-sm text-brand-gray">LLM features, retrieval, agents, and workflow automation with privacy
             by design.</p>
         </article>
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -680,7 +654,7 @@
           <p class="mt-3 text-sm text-brand-gray">React Native apps with shared design systems and native performance.
           </p>
         </article>
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2" />
@@ -690,7 +664,7 @@
           <p class="mt-3 text-sm text-brand-gray">Ship a feature, clear a backlog, or stabilize a codebase. We unblock
             teams.</p>
         </article>
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h6l2 4h10l-2 8H7z" />
@@ -700,7 +674,7 @@
           <p class="mt-3 text-sm text-brand-gray">Checkout flows, subscriptions, and marketplace integrations that
             convert.</p>
         </article>
-        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition bg-white">
           <div class="flex items-center gap-3">
             <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -715,7 +689,7 @@
   </section>
 
   <!-- Work -->
-  <section id="work" class="py-20 bg-slate-50">
+  <!-- <section id="work" class="py-20 bg-slate-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <header class="max-w-2xl reveal">
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Selected work</h2>
@@ -749,7 +723,7 @@
         </article>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Approach -->
   <section id="approach" class="py-20">
@@ -760,20 +734,20 @@
         </p>
       </header>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6 bg-white">
           <h3 class="font-semibold">Discovery → Scope</h3>
           <p class="mt-2 text-sm text-brand-gray">Map goals to a deliverable plan with milestones, risks, and KPIs.</p>
         </div>
-        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6 bg-white">
           <h3 class="font-semibold">Design → Build</h3>
           <p class="mt-2 text-sm text-brand-gray">Accessible, responsive UI. Instrumented APIs. CI/CD from the start.
           </p>
         </div>
-        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6 bg-white">
           <h3 class="font-semibold">Measure → Improve</h3>
           <p class="mt-2 text-sm text-brand-gray">Ship value, measure outcomes, iterate with data—not vibes.</p>
         </div>
-        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6 bg-white">
           <h3 class="font-semibold">Handoff → Support</h3>
           <p class="mt-2 text-sm text-brand-gray">Knowledge transfer, docs, and optional retainers for continuity.</p>
         </div>
@@ -792,48 +766,13 @@
           <a href="#contact"
             class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-4 py-2 hover:bg-brand-ivory">Work
             with us</a>
-          <a href="#" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">GitHub</a>
-          <a href="#" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">LinkedIn</a>
+          <!-- <a href="#" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">GitHub</a> -->
+          <a href="https://www.linkedin.com/company/differenceeng/"
+            class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">LinkedIn</a>
         </div>
       </div>
       <div class="reveal">
         <!-- Engine-inspired graphic with North Star accent -->
-        <svg viewBox="0 0 600 400"
-          class="w-full h-auto rounded-2xl border border-brand-gray/30 bg-gradient-to-b from-brand-ivory to-white">
-          <defs>
-            <linearGradient id="mnsky" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#FAF9F4" />
-              <stop offset="100%" stop-color="#EAE9E2" />
-            </linearGradient>
-          </defs>
-          <rect width="600" height="400" fill="url(#mnsky)" />
-          <!-- Gear -->
-          <g transform="translate(140,120)">
-            <circle cx="160" cy="80" r="64" fill="none" stroke="#8597A9" stroke-width="10" />
-            <!-- simple teeth -->
-            <g stroke="#8597A9" stroke-width="10" stroke-linecap="round">
-              <line x1="160" y1="6" x2="160" y2="-10" />
-              <line x1="160" y1="166" x2="160" y2="182" />
-              <line x1="86" y1="80" x2="70" y2="80" />
-              <line x1="234" y1="80" x2="250" y2="80" />
-            </g>
-            <circle cx="160" cy="80" r="18" fill="#E7B257" />
-          </g>
-          <!-- North Star -->
-          <circle cx="500" cy="90" r="3" fill="#E7B257" />
-          <g stroke="#E7B257" stroke-width="2">
-            <line x1="500" y1="82" x2="500" y2="98" />
-            <line x1="492" y1="90" x2="508" y2="90" />
-            <line x1="494" y1="84" x2="506" y2="96" />
-            <line x1="506" y1="84" x2="494" y2="96" />
-          </g>
-          <!-- Tagline -->
-          <rect x="60" y="250" width="480" height="110" rx="16" fill="#E7B257" opacity="0.08" />
-          <text x="80" y="295" fill="#2C343C" font-family="Junicode, Georgia, serif" font-size="22"
-            font-weight="700">Difference Engine</text>
-          <text x="80" y="322" fill="#2C343C" font-family="Junicode, Georgia, serif" font-size="14">Minnesota-based
-            software development agency</text>
-        </svg>
       </div>
     </div>
   </section>
@@ -845,7 +784,7 @@
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Start a project</h2>
         <p class="mt-3 text-brand-gray">Tell us what you're building. We’ll reply with a concise plan and timeline.</p>
       </header>
-      <div class="mt-10 reveal rounded-2xl border border-brand-gray/30 p-6">
+      <div class="mt-10 reveal rounded-2xl border border-brand-gray/30 p-6 bg-white shadow-sm">
         <form id="contactForm" class="grid gap-4" action="mailto:hello@differenceengine.example" method="post"
           enctype="text/plain">
           <div class="grid gap-2">
@@ -883,10 +822,7 @@
   <footer class="py-10 border-t border-brand-gray/20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2">
-        <svg class="h-6 w-6 text-brand-gold" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="6" y="6" width="36" height="36" rx="8" stroke="currentColor" stroke-width="3" />
-          <path d="M16 17h9m7 0h-7v14h7m-23 0h9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-        </svg>
+        <img src="img/Logo-square.png" alt="Difference Engine" class="h-6 w-6 rounded-md shadow-sm" />
         <span class="font-semibold">Difference&nbsp;Engine</span>
       </div>
       <nav class="text-sm flex items-center gap-5">
@@ -952,7 +888,10 @@
   <!-- Parallax & button caustics script -->
   <script>
     // Parallax driver (mouse + scroll)
-    const layers = Array.from(document.querySelectorAll('[data-speed]'));
+    // Previously this selected every element with a data-speed attribute (including content images),
+    // which caused the Minnesota image strip and other items to drift subtly. We now scope it only
+    // to decorative background blobs (.px-layer) so regular images stay put.
+    const layers = Array.from(document.querySelectorAll('.px-layer[data-speed]'));
     if (layers.length) {
       let mouseX = 0, mouseY = 0;
       window.addEventListener('mousemove', (e) => {
@@ -973,82 +912,66 @@
     }
   </script>
 
-  <!-- Terminal simulation -->
-
-  <!-- Terminal simulation -->
-  <div id="terminalSim"
-    style="background:#222;color:#eee;border-radius:8px;padding:1.5rem;margin:2rem 0;max-width:700px;font-size:1rem;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-  </div>
+  <!-- Terminal simulation (writes into #termOut in hero) -->
   <script>
-    const el = document.getElementById('terminalSim');
-    const PROMPT = '➜  difference-engine % ';
-    const seq = [
-      { cmd: 'init "difference-engine"', out: ['✔ Created project', '✔ Installed deps', '→ Next: npm run dev'] },
-      { cmd: 'npm run dev', out: ['ready - started server on http://localhost:5173', 'watching files…'] },
-      { cmd: 'git add -A && git commit -m "initial"', out: ['[main 1a2b3c] initial', '12 files changed, 0 insertions(+), 0 deletions(-)'] },
-      { cmd: 'git push origin main', out: ['Enumerating objects: 42, done.', 'remote: Deploying to GitHub Pages…', '✅ Deployed'] },
-    ];
+    (function terminalSim() {
+      const el = document.getElementById('termOut');
+      if (!el) { console.warn('[terminalSim] #termOut not found'); return; }
 
-    // Tunables
-    const settings = {
-      typeMin: 10,   // ms
-      typeMax: 28,   // ms
-      linePause: 450,
-      cmdPause: 900,
-      loopPause: 1500,
-    };
+      const PROMPT = '➜  difference-engine % ';
+      const seq = [
+        { cmd: 'init "difference-engine"', out: ['✔ Created project', '✔ Installed deps', '→ Next: npm run dev'] },
+        { cmd: 'npm run dev', out: ['ready - started server on http://localhost:5173', 'watching files…'] },
+        { cmd: 'git add -A && git commit -m "initial"', out: ['[main 1a2b3c] initial', '12 files changed, 0 insertions(+), 0 deletions(-)'] },
+        { cmd: 'git push origin main', out: ['Enumerating objects: 42, done.', 'remote: Deploying to GitHub Pages…', '✅ Deployed'] },
+      ];
 
-    // Helpers
-    const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
-    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-    const append = (str) => { el.append(document.createTextNode(str)); el.scrollTop = el.scrollHeight; };
-    const line = (str = '') => append(str + '\n');
+      const settings = { typeMin: 10, typeMax: 28, linePause: 450, cmdPause: 900, loopPause: 1500 };
+      let stop = false, loopCount = 0;
 
-    // Cursor
-    const cursor = document.createElement('span');
-    cursor.textContent = '▮';
-    cursor.style.marginLeft = '2px';
-    cursor.style.opacity = '1';
-    setInterval(() => { cursor.style.opacity = cursor.style.opacity === '1' ? '0' : '1'; }, 520);
+      const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      const append = (str) => { el.append(document.createTextNode(str)); el.scrollTop = el.scrollHeight; };
+      const line = (str = '') => append(str + '\n');
 
-    // Ensure monospace & preformatting
-    el.style.whiteSpace = 'pre-wrap';
-    el.style.fontFamily = 'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace';
+      // Cursor
+      const cursor = document.createElement('span');
+      cursor.textContent = '▮';
+      cursor.style.marginLeft = '2px';
+      cursor.style.opacity = '1';
+      setInterval(() => { cursor.style.opacity = cursor.style.opacity === '1' ? '0' : '1'; }, 520);
 
-    async function type(str) {
-      for (const ch of str) {
-        append(ch);
-        await sleep(rand(settings.typeMin, settings.typeMax));
-      }
-    }
-
-    async function run() {
-      while (true) {
-        for (const step of seq) {
-          // Prompt + command (typed)
-          append(PROMPT);
-          el.appendChild(cursor);
-          await type(step.cmd);
-          line();                         // newline after command
-          await sleep(settings.linePause);
-
-          // Output lines (printed, not typed)
-          for (const out of (step.out || [])) {
-            line(out);
-            await sleep(160);
-          }
-
-          await sleep(settings.cmdPause);
-          line();                         // spacer line
+      async function type(str) {
+        for (const ch of str) {
+          append(ch);
+          await sleep(rand(settings.typeMin, settings.typeMax));
+          if (stop) return;
         }
-
-        // Loop: clear terminal and restart
-        await sleep(settings.loopPause);
-        el.textContent = '';
       }
-    }
 
-    run();
+      async function loop() {
+        console.info('[terminalSim] start');
+        line();
+        while (!stop) {
+          for (const step of seq) {
+            append(PROMPT); el.appendChild(cursor);
+            await type(step.cmd); if (stop) return;
+            line(); await sleep(settings.linePause);
+            for (const out of (step.out || [])) { line(out); await sleep(160); if (stop) return; }
+            await sleep(settings.cmdPause + rand(-120, 120));
+            line();
+          }
+          await sleep(settings.loopPause); if (stop) return;
+          el.textContent = '';
+        }
+      }
+
+      loop();
+      window.DE_Terminal = {
+        stop: () => { stop = true; console.info('[terminalSim] stop'); },
+        restart: () => { if (!stop) return; stop = false; el.textContent = ''; loop(); console.info('[terminalSim] restart'); }
+      };
+    })();
   </script>
 
 </body>
