@@ -974,10 +974,83 @@
   </script>
 
   <!-- Terminal simulation -->
-  <script>
-    (function () {
-      const el = document.getElementById('termOut');
-      if (!el) return;
 
-    // Command sequence to loop
-  
+  <!-- Terminal simulation -->
+  <div id="terminalSim"
+    style="background:#222;color:#eee;border-radius:8px;padding:1.5rem;margin:2rem 0;max-width:700px;font-size:1rem;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
+  </div>
+  <script>
+    const el = document.getElementById('terminalSim');
+    const PROMPT = '➜  difference-engine % ';
+    const seq = [
+      { cmd: 'init "difference-engine"', out: ['✔ Created project', '✔ Installed deps', '→ Next: npm run dev'] },
+      { cmd: 'npm run dev', out: ['ready - started server on http://localhost:5173', 'watching files…'] },
+      { cmd: 'git add -A && git commit -m "initial"', out: ['[main 1a2b3c] initial', '12 files changed, 0 insertions(+), 0 deletions(-)'] },
+      { cmd: 'git push origin main', out: ['Enumerating objects: 42, done.', 'remote: Deploying to GitHub Pages…', '✅ Deployed'] },
+    ];
+
+    // Tunables
+    const settings = {
+      typeMin: 10,   // ms
+      typeMax: 28,   // ms
+      linePause: 450,
+      cmdPause: 900,
+      loopPause: 1500,
+    };
+
+    // Helpers
+    const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+    const append = (str) => { el.append(document.createTextNode(str)); el.scrollTop = el.scrollHeight; };
+    const line = (str = '') => append(str + '\n');
+
+    // Cursor
+    const cursor = document.createElement('span');
+    cursor.textContent = '▮';
+    cursor.style.marginLeft = '2px';
+    cursor.style.opacity = '1';
+    setInterval(() => { cursor.style.opacity = cursor.style.opacity === '1' ? '0' : '1'; }, 520);
+
+    // Ensure monospace & preformatting
+    el.style.whiteSpace = 'pre-wrap';
+    el.style.fontFamily = 'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace';
+
+    async function type(str) {
+      for (const ch of str) {
+        append(ch);
+        await sleep(rand(settings.typeMin, settings.typeMax));
+      }
+    }
+
+    async function run() {
+      while (true) {
+        for (const step of seq) {
+          // Prompt + command (typed)
+          append(PROMPT);
+          el.appendChild(cursor);
+          await type(step.cmd);
+          line();                         // newline after command
+          await sleep(settings.linePause);
+
+          // Output lines (printed, not typed)
+          for (const out of (step.out || [])) {
+            line(out);
+            await sleep(160);
+          }
+
+          await sleep(settings.cmdPause);
+          line();                         // spacer line
+        }
+
+        // Loop: clear terminal and restart
+        await sleep(settings.loopPause);
+        el.textContent = '';
+      }
+    }
+
+    run();
+  </script>
+
+</body>
+
+</html>
