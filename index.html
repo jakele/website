@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Difference Engine — Minnesota Software Development Agency</title>
+  <meta name="description"
+    content="Difference Engine is a Minnesota-based software development agency building modern web, mobile, and AI-powered applications." />
+  <meta property="og:title" content="Difference Engine — Minnesota Software Development Agency" />
+  <meta property="og:description"
+    content="We design, build, and ship production-grade software: web, mobile, and AI systems." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og.png" />
+  <meta name="theme-color" content="#E7B257" />
+
+  <!-- Fonts: Junicode (serif primary) + JetBrains Mono for code accents -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Junicode:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind via CDN (no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Junicode', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular']
+          },
+          colors: {
+            brand: {
+              gold: '#E7B257',
+              green: '#A1AE71',
+              steel: '#8597A9',  /* slate blue */
+              clay: '#9A5B52',   /* brick */
+              slate: '#2C343C',
+              gray: '#585F66',
+              ivory: '#EAE9E2',
+              off: '#FAF9F4',
+            }
+          },
+          boxShadow: {
+            glass: '0 10px 30px -10px rgba(231,178,87,0.35)'
+          },
+          backgroundImage: {
+            grid: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.07) 1px, transparent 0)',
+            engine: 'conic-gradient(from 180deg at 50% 50%, rgba(231,178,87,0.12), rgba(161,174,113,0.12), rgba(133,151,169,0.12), rgba(154,91,82,0.12))'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --gold: #E7B257;
+      --olive: #A1AE71;
+      --steel: #8597A9;
+      --clay: #9A5B52;
+      --gray: #585F66;
+      --slate: #2C343C;
+      --off: #FAF9F4;
+    }
+
+    /* Subtle grid + linen noise background */
+    .bg-grid {
+      background-size: 22px 22px;
+    }
+
+    .bg-noise::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      mix-blend-mode: multiply;
+      background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.6'/></feComponentTransfer></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+      background-size: 300px 300px;
+    }
+
+    /* Prevent layout shift for icons */
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* Simple reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero inner ring reminiscent of a flywheel */
+    .ring-engine {
+      box-shadow: 0 0 0 9999px rgba(44, 52, 60, .04) inset;
+    }
+
+    /* Gear-tooth divider */
+    .teeth {
+      background: repeating-linear-gradient(90deg, transparent 0 18px, currentColor 18px 22px);
+      opacity: .12;
+      height: 6px;
+    }
+
+    /* === Liquid Glass Primary CTA (brand gold with opacity) === */
+    .btn-glass {
+      position: relative;
+      isolation: isolate;
+      border-radius: 0.9rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .38)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .22) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .14) 0%, transparent 60%);
+      border: 1px solid rgba(231, 178, 87, .55);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(12px) saturate(160%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65);
+      transition: transform .18s ease, filter .18s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .btn-glass::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      opacity: .85;
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .3) 42%, rgba(255, 255, 255, 0) 60%),
+        conic-gradient(from 180deg at 50% 0%, rgba(231, 178, 87, .22), rgba(133, 151, 169, .12), rgba(154, 91, 82, .12), rgba(231, 178, 87, .22));
+    }
+
+    .btn-glass::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: .65;
+      background: radial-gradient(80% 60% at 50% -20%, rgba(255, 255, 255, .95), transparent 60%);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .btn-glass:hover {
+      transform: translateY(-1px);
+      filter: saturate(115%);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .82), rgba(255, 255, 255, .44)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .32) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .18) 0%, transparent 60%);
+      border-color: rgba(231, 178, 87, .75);
+    }
+
+    .btn-glass:active {
+      transform: translateY(0);
+      filter: saturate(120%);
+    }
+
+    .btn-glass.pop {
+      box-shadow: none;
+    }
+
+    /* no outer drop shadows; relies on glass + blur */
+    .btn-aura {
+      display: none;
+    }
+
+    /* keep disabled per your note */
+
+    /* Decorative parallax blobs (brand colors) */
+    .px-layer {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(18px);
+      opacity: .35;
+      transform: translateZ(0);
+    }
+
+    .px-l1 {
+      width: 520px;
+      height: 520px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(231, 178, 87, .45), rgba(231, 178, 87, 0) 60%),
+        radial-gradient(circle at 70% 70%, rgba(161, 174, 113, .35), rgba(161, 174, 113, 0) 60%);
+    }
+
+    .px-l2 {
+      width: 380px;
+      height: 380px;
+      background:
+        radial-gradient(circle at 60% 40%, rgba(133, 151, 169, .40), rgba(133, 151, 169, 0) 65%),
+        radial-gradient(circle at 30% 70%, rgba(154, 91, 82, .25), rgba(154, 91, 82, 0) 70%);
+    }
+
+    .px-l3 {
+      width: 260px;
+      height: 260px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(234, 233, 226, .9), rgba(234, 233, 226, 0) 60%);
+      opacity: .6;
+      filter: blur(10px);
+    }
+
+    /* Scrolling ticker */
+    .ticker {
+      --gap: 3rem;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(88, 95, 102, .2);
+      border-bottom: 1px solid rgba(88, 95, 102, .2);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, .3));
+      backdrop-filter: blur(8px) saturate(140%);
+    }
+
+    .ticker::before,
+    .ticker::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 140px;
+      z-index: 2;
+    }
+
+    .ticker::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(250, 249, 244, 1), rgba(250, 249, 244, 0));
+    }
+
+    .ticker::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(250, 249, 244, 1), rgba(250, 249, 244, 0));
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: var(--gap);
+      padding: 0.85rem 0;
+      white-space: nowrap;
+      will-change: transform;
+      animation: scroll 38s linear infinite;
+    }
+
+    .ticker-track:nth-child(2) {
+      animation-delay: -19s;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 9999px;
+      padding: .5rem .9rem;
+      background: rgba(255, 255, 255, .5);
+      border: 1px solid rgba(255, 255, 255, .45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75), 0 6px 16px -8px rgba(44, 52, 60, .25);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* Brand gradient text */
+    .text-gradient {
+      background: linear-gradient(90deg, #E7B257 0%, #A1AE71 40%, #9A5B52 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent
+    }
+
+    /* iTerm-like terminal bits */
+    @keyframes blink {
+
+      0%,
+      49%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    .caret::after {
+      content: "▍";
+      display: inline-block;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      color: var(--gold)
+    }
+
+    .traffic-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 0 0 1px rgba(0, 0, 0, .12)
+    }
+
+    .dot-red {
+      background: #ff5f56
+    }
+
+    .dot-yellow {
+      background: #ffbd2e
+    }
+
+    .dot-green {
+      background: #27c93f
+    }
+
+    /* iTerm-like terminal bits */
+    @keyframes blink {
+
+      0%,
+      49%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    .caret::after {
+      content: "▍";
+      display: inline-block;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      color: var(--gold)
+    }
+
+    .traffic-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 0 0 1px rgba(0, 0, 0, .12)
+    }
+
+    .dot-red {
+      background: #ff5f56
+    }
+
+    .dot-yellow {
+      background: #ffbd2e
+    }
+
+    .dot-green {
+      background: #27c93f
+    }
+
+    /* Fixed-height terminal box */
+    .term-box {
+      height: 320px;
+    }
+  </style>
+</head>
+
+<body
+  class="font-serif min-h-screen bg-brand-off text-brand-slate selection:bg-brand-gold/60 selection:text-brand-slate">
+  <!-- Skip link -->
+  <a href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-white/90 focus:backdrop-blur focus:rounded-md focus:px-3 focus:py-2 focus:ring focus:ring-brand-gold/60">Skip
+    to content</a>
+
+  <!-- Header -->
+  <header id="header"
+    class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/80 border-b border-brand-gray/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#home" class="flex items-center gap-2 group" aria-label="Difference Engine home">
+          <!-- Monogram evoking a geared frame -->
+          <svg class="h-7 w-7 text-brand-gold group-hover:rotate-6 transition" viewBox="0 0 48 48" fill="none"
+            aria-hidden="true">
+            <defs>
+              <linearGradient id="gear" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#E7B257" />
+                <stop offset="100%" stop-color="#A1AE71" />
+              </linearGradient>
+            </defs>
+            <rect x="6" y="6" width="36" height="36" rx="8" stroke="url(#gear)" stroke-width="3" />
+            <path d="M16 17h9m7 0h-7v14h7m-23 0h9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <span class="font-extrabold tracking-tight text-lg">Difference&nbsp;Engine</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#services" class="hover:text-brand-gold">Services</a>
+          <a href="#work" class="hover:text-brand-gold">Work</a>
+          <a href="#approach" class="hover:text-brand-gold">Approach</a>
+          <a href="#about" class="hover:text-brand-gold">About</a>
+          <a href="#contact" class="hover:text-brand-gold">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a href="#contact"
+            class="hidden sm:inline-flex items-center gap-2 btn-glass pop px-4 py-2 text-brand-slate"><span
+              class="btn-aura" aria-hidden="true"></span>Start a project<span aria-hidden>→</span></a>
+          <button id="menuBtn"
+            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 hover:bg-brand-ivory/60"
+            aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-brand-gray/20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-2">
+        <a href="#contact" class="py-2">Contact</a>
+        <a href="#contact"
+          class="inline-flex items-center justify-center gap-2 btn-glass pop px-4 py-2 text-brand-slate shadow"><span
+            class="btn-aura" aria-hidden="true"></span>Start a project<span aria-hidden>→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-engine opacity-70 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-grid"></div>
+    <div class="absolute inset-0 bg-noise"></div>
+
+    <!-- Parallax layers -->
+    <div id="px" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="px-layer px-l1" data-speed="0.08" style="left:-120px; top:-60px"></div>
+      <div class="px-layer px-l2" data-speed="0.14" style="right:-140px; top:160px"></div>
+      <div class="px-layer px-l3" data-speed="0.22" style="left:40%; top:20%"></div>
+      <div class="px-layer" data-speed="0.05"
+        style="right:-60px; bottom:-80px; width:460px; height:460px; background:radial-gradient(circle at 40% 40%, rgba(154,91,82,.30), rgba(154,91,82,0) 65%), radial-gradient(circle at 70% 70%, rgba(231,178,87,.25), rgba(231,178,87,0) 70%);">
+      </div>
+    </div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-10 sm:pt-24" id="main">
+      <div class="grid items-center gap-10 lg:grid-cols-[1fr_1.35fr] xl:grid-cols-[1fr_1.6fr]">
+        <div class="reveal">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-gradient">
+            Minnesota software engineers building products that ship.
+          </h1>
+          <p class="mt-5 text-lg text-brand-gray max-w-xl">
+            Difference Engine designs and develops production-ready software—web, mobile, and AI-powered systems—for
+            startups and enterprises across the North.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#contact" class="inline-flex items-center gap-2 btn-glass pop px-5 py-3 text-brand-slate"><span
+                class="btn-aura" aria-hidden="true"></span>Let's talk<span aria-hidden>→</span></a>
+            <a href="#work"
+              class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-5 py-3 hover:bg-brand-ivory">See
+              work</a>
+          </div>
+          <div class="mt-10 flex items-center gap-6 text-xs text-brand-gray">
+            <div class="flex items-center gap-2"><svg class="icon" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>Senior product engineers</div>
+            <div class="flex items-center gap-2"><svg class="icon" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8" />
+              </svg>AI & integrations</div>
+            <div class="flex items-center gap-2"><svg class="icon" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+              </svg>Transparent delivery</div>
+          </div>
+        </div>
+
+        <div class="reveal lg:justify-self-stretch lg:pl-6">
+          <div class="relative rounded-3xl ring-1 ring-brand-gray/20 ring-engine p-1" data-speed="0.06">
+            <div
+              class="rounded-[1.35rem] bg-gradient-to-br from-brand-ivory to-white border border-brand-gray/30 overflow-hidden shadow-2xl">
+              <!-- iTerm-like chrome -->
+              <div
+                class="px-4 py-3 border-b border-brand-gray/30 flex items-center justify-between bg-brand-slate/90 text-white">
+                <div class="flex items-center gap-2">
+                  <span class="traffic-dot dot-red"></span>
+                  <span class="traffic-dot dot-yellow"></span>
+                  <span class="traffic-dot dot-green"></span>
+                  <span class="text-xs opacity-70 ml-2">iTerm — ~/projects/difference-engine</span>
+                </div>
+                <span class="text-xs text-brand-gold">zsh</span>
+              </div>
+              <!-- Terminal output -->
+              <div class="bg-[#0b1220] text-white term-box">
+                <pre id="termOut" aria-live="polite"
+                  class="h-full p-5 font-mono text-[13px] leading-relaxed whitespace-pre-wrap overflow-auto"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Minnesota image strip (free/public-domain images) -->
+    <div class="border-t border-brand-gray/20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+        <!-- Caption above MN image strip -->
+        <div class="flex items-center justify-center gap-2 pb-3">
+          <svg class="h-4 w-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l2.39 5.63L20.5 8l-4.55 3.95L17.3 18 12 14.9 6.7 18l1.35-6.05L3.5 8l6.11-.37L12 2z" />
+          </svg>
+          <span class="text-[11px] sm:text-xs tracking-wider uppercase text-brand-gray">Proudly based in
+            Minnesota</span>
+          <svg class="h-4 w-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l2.39 5.63L20.5 8l-4.55 3.95L17.3 18 12 14.9 6.7 18l1.35-6.05L3.5 8l6.11-.37L12 2z" />
+          </svg>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <img data-speed="0.06" src="https://cdn.pixabay.com/photo/2021/05/12/15/37/duluth-6248635_1280.jpg"
+            alt="Lake Superior North Shore" class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.10" src="https://cdn.pixabay.com/photo/2016/11/14/23/54/minneapolis-1824972_1280.jpg"
+            alt="Stone Arch Bridge, Minneapolis" class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.14" src="https://cdn.pixabay.com/photo/2016/04/24/18/20/waterfall-1350320_1280.jpg"
+            alt="Boundary Waters pines and water" class="h-28 w-full object-cover rounded-lg" />
+          <img data-speed="0.12" src="https://cdn.pixabay.com/photo/2013/06/19/19/51/saint-paul-140199_1280.jpg"
+            alt="Prairie and sky in western Minnesota" class="h-28 w-full object-cover rounded-lg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech ticker -->
+  <section aria-label="Technologies" class="ticker">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative w-full overflow-hidden">
+        <div class="ticker-track">
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">React Native</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Python</span>
+          <span class="chip">Django</span>
+          <span class="chip">Flask</span>
+          <span class="chip">Go</span>
+          <span class="chip">Kotlin</span>
+          <span class="chip">Swift</span>
+          <span class="chip">Java</span>
+          <span class="chip">.NET</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Redis</span>
+          <span class="chip">Kafka</span>
+          <span class="chip">GraphQL</span>
+          <span class="chip">REST</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Azure</span>
+          <span class="chip">GCP</span>
+          <span class="chip">Terraform</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">CI/CD</span>
+          <span class="chip">DevOps</span>
+          <span class="chip">SecOps</span>
+          <span class="chip">SRE</span>
+          <span class="chip">Cypress</span>
+          <span class="chip">Playwright</span>
+          <span class="chip">Jest</span>
+          <span class="chip">Vitest</span>
+          <span class="chip">Angular</span>
+          <span class="chip">Vue</span>
+          <span class="chip">Tailwind</span>
+          <span class="chip">Figma</span>
+          <span class="chip">LLMs</span>
+          <span class="chip">RAG</span>
+          <span class="chip">Agents</span>
+          <span class="chip">OpenAI</span>
+          <span class="chip">LangChain</span>
+          <span class="chip">Ray</span>
+        </div>
+        <div class="ticker-track" aria-hidden="true">
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">React Native</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Python</span>
+          <span class="chip">Django</span>
+          <span class="chip">Flask</span>
+          <span class="chip">Go</span>
+          <span class="chip">Kotlin</span>
+          <span class="chip">Swift</span>
+          <span class="chip">Java</span>
+          <span class="chip">.NET</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Redis</span>
+          <span class="chip">Kafka</span>
+          <span class="chip">GraphQL</span>
+          <span class="chip">REST</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Azure</span>
+          <span class="chip">GCP</span>
+          <span class="chip">Terraform</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">CI/CD</span>
+          <span class="chip">DevOps</span>
+          <span class="chip">SecOps</span>
+          <span class="chip">SRE</span>
+          <span class="chip">Cypress</span>
+          <span class="chip">Playwright</span>
+          <span class="chip">Jest</span>
+          <span class="chip">Vitest</span>
+          <span class="chip">Angular</span>
+          <span class="chip">Vue</span>
+          <span class="chip">Tailwind</span>
+          <span class="chip">Figma</span>
+          <span class="chip">LLMs</span>
+          <span class="chip">RAG</span>
+          <span class="chip">Agents</span>
+          <span class="chip">OpenAI</span>
+          <span class="chip">LangChain</span>
+          <span class="chip">Ray</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="max-w-2xl reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Services</h2>
+        <p class="mt-3 text-brand-gray">Full-stack product development from discovery to launch. Senior engineers only.
+        </p>
+      </header>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
+            <h3 class="font-semibold">Web & Platform</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">React/Next.js, Node, Python, GraphQL/REST, PostgreSQL. Scalable,
+            observable, secure.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8" />
+            </svg>
+            <h3 class="font-semibold">AI & Automation</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">LLM features, retrieval, agents, and workflow automation with privacy
+            by design.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <h3 class="font-semibold">Mobile</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">React Native apps with shared design systems and native performance.
+          </p>
+        </article>
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2" />
+            </svg>
+            <h3 class="font-semibold">Sprints & Rescue</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">Ship a feature, clear a backlog, or stabilize a codebase. We unblock
+            teams.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h6l2 4h10l-2 8H7z" />
+            </svg>
+            <h3 class="font-semibold">E-commerce & Payments</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">Checkout flows, subscriptions, and marketplace integrations that
+            convert.</p>
+        </article>
+        <article class="reveal rounded-2xl border border-brand-gray/30 p-6 hover:shadow-lg transition">
+          <div class="flex items-center gap-3">
+            <svg class="icon text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8c-3 0-5 2-5 5v4h10v-4c0-3-2-5-5-5z" />
+            </svg>
+            <h3 class="font-semibold">Security & Compliance</h3>
+          </div>
+          <p class="mt-3 text-sm text-brand-gray">Auth, SSO, SOC2 guidance, and secure-by-default architecture.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="py-20 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="max-w-2xl reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Selected work</h2>
+        <p class="mt-3 text-brand-gray">A few snapshots from recent builds. Detailed case studies available on request.
+        </p>
+      </header>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="reveal group rounded-2xl border border-brand-gray/30 overflow-hidden bg-white/60">
+          <div class="aspect-video bg-gradient-to-br from-brand-gold/20 to-brand-green/20"></div>
+          <div class="p-5">
+            <h3 class="font-semibold">Logistics analytics platform</h3>
+            <p class="mt-2 text-sm text-brand-gray">React + Python, near-real-time telemetry, role-based access, SOC2
+              controls.</p>
+          </div>
+        </article>
+        <article class="reveal group rounded-2xl border border-brand-gray/30 overflow-hidden bg-white/60">
+          <div class="aspect-video bg-gradient-to-br from-brand-steel/20 to-brand-gold/20"></div>
+          <div class="p-5">
+            <h3 class="font-semibold">Consumer mobile app</h3>
+            <p class="mt-2 text-sm text-brand-gray">React Native with shared design system; CI/CD and crash analytics.
+            </p>
+          </div>
+        </article>
+        <article class="reveal group rounded-2xl border border-brand-gray/30 overflow-hidden bg-white/60">
+          <div class="aspect-video bg-gradient-to-br from-brand-green/20 to-brand-clay/20"></div>
+          <div class="p-5">
+            <h3 class="font-semibold">AI claims triage</h3>
+            <p class="mt-2 text-sm text-brand-gray">LLM-assisted routing and summarization with human-in-the-loop
+              review.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section id="approach" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="max-w-2xl reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Approach</h2>
+        <p class="mt-3 text-brand-gray">Small, senior teams. Weekly demos. Clear ownership. Source code from day one.
+        </p>
+      </header>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+          <h3 class="font-semibold">Discovery → Scope</h3>
+          <p class="mt-2 text-sm text-brand-gray">Map goals to a deliverable plan with milestones, risks, and KPIs.</p>
+        </div>
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+          <h3 class="font-semibold">Design → Build</h3>
+          <p class="mt-2 text-sm text-brand-gray">Accessible, responsive UI. Instrumented APIs. CI/CD from the start.
+          </p>
+        </div>
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+          <h3 class="font-semibold">Measure → Improve</h3>
+          <p class="mt-2 text-sm text-brand-gray">Ship value, measure outcomes, iterate with data—not vibes.</p>
+        </div>
+        <div class="reveal rounded-2xl border border-brand-gray/30 p-6">
+          <h3 class="font-semibold">Handoff → Support</h3>
+          <p class="mt-2 text-sm text-brand-gray">Knowledge transfer, docs, and optional retainers for continuity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 bg-brand-ivory/30">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid gap-10 md:grid-cols-2 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Based in Minnesota</h2>
+        <p class="mt-4 text-brand-gray">We build with Midwestern pragmatism: clear scope, direct communication, and
+          dependable delivery. On-site in the Twin Cities when it helps, remote-first when it doesn’t.</p>
+        <div class="mt-6 flex gap-4 text-sm">
+          <a href="#contact"
+            class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-4 py-2 hover:bg-brand-ivory">Work
+            with us</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">GitHub</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 hover:underline">LinkedIn</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <!-- Engine-inspired graphic with North Star accent -->
+        <svg viewBox="0 0 600 400"
+          class="w-full h-auto rounded-2xl border border-brand-gray/30 bg-gradient-to-b from-brand-ivory to-white">
+          <defs>
+            <linearGradient id="mnsky" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#FAF9F4" />
+              <stop offset="100%" stop-color="#EAE9E2" />
+            </linearGradient>
+          </defs>
+          <rect width="600" height="400" fill="url(#mnsky)" />
+          <!-- Gear -->
+          <g transform="translate(140,120)">
+            <circle cx="160" cy="80" r="64" fill="none" stroke="#8597A9" stroke-width="10" />
+            <!-- simple teeth -->
+            <g stroke="#8597A9" stroke-width="10" stroke-linecap="round">
+              <line x1="160" y1="6" x2="160" y2="-10" />
+              <line x1="160" y1="166" x2="160" y2="182" />
+              <line x1="86" y1="80" x2="70" y2="80" />
+              <line x1="234" y1="80" x2="250" y2="80" />
+            </g>
+            <circle cx="160" cy="80" r="18" fill="#E7B257" />
+          </g>
+          <!-- North Star -->
+          <circle cx="500" cy="90" r="3" fill="#E7B257" />
+          <g stroke="#E7B257" stroke-width="2">
+            <line x1="500" y1="82" x2="500" y2="98" />
+            <line x1="492" y1="90" x2="508" y2="90" />
+            <line x1="494" y1="84" x2="506" y2="96" />
+            <line x1="506" y1="84" x2="494" y2="96" />
+          </g>
+          <!-- Tagline -->
+          <rect x="60" y="250" width="480" height="110" rx="16" fill="#E7B257" opacity="0.08" />
+          <text x="80" y="295" fill="#2C343C" font-family="Junicode, Georgia, serif" font-size="22"
+            font-weight="700">Difference Engine</text>
+          <text x="80" y="322" fill="#2C343C" font-family="Junicode, Georgia, serif" font-size="14">Minnesota-based
+            software development agency</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-brand-ivory/30">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <header class="reveal text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Start a project</h2>
+        <p class="mt-3 text-brand-gray">Tell us what you're building. We’ll reply with a concise plan and timeline.</p>
+      </header>
+      <div class="mt-10 reveal rounded-2xl border border-brand-gray/30 p-6">
+        <form id="contactForm" class="grid gap-4" action="mailto:hello@differenceengine.example" method="post"
+          enctype="text/plain">
+          <div class="grid gap-2">
+            <label for="name" class="text-sm font-medium">Name</label>
+            <input id="name" name="name" required placeholder="Your name"
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40" />
+          </div>
+          <div class="grid gap-2">
+            <label for="email" class="text-sm font-medium">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com"
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40" />
+          </div>
+          <div class="grid gap-2">
+            <label for="msg" class="text-sm font-medium">Project brief</label>
+            <textarea id="msg" name="message" rows="5" required
+              placeholder="A few lines on goals, constraints, and timing."
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40"></textarea>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="submit" class="inline-flex items-center gap-2 btn-glass pop px-5 py-3 text-brand-slate"><span
+                class="btn-aura" aria-hidden="true"></span>Send email</button>
+            <button type="button" id="copyEmail"
+              class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-4 py-2 hover:bg-brand-ivory"
+              aria-label="Copy email address">Copy email</button>
+            <span id="copyToast" class="hidden text-sm text-brand-green">Copied.</span>
+          </div>
+          <p class="text-xs text-brand-gray">Prefer your own client? Email <a
+              href="mailto:hello@differenceengine.example" class="underline">hello@differenceengine.example</a>.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 border-t border-brand-gray/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <svg class="h-6 w-6 text-brand-gold" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect x="6" y="6" width="36" height="36" rx="8" stroke="currentColor" stroke-width="3" />
+          <path d="M16 17h9m7 0h-7v14h7m-23 0h9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <span class="font-semibold">Difference&nbsp;Engine</span>
+      </div>
+      <nav class="text-sm flex items-center gap-5">
+        <a href="#contact" class="hover:underline">Contact</a>
+      </nav>
+      <p class="text-xs text-brand-gray">© <span id="year"></span> Difference Engine, Minnesota.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+
+    // Header shadow on scroll
+    const header = document.getElementById('header');
+    const shadowToggle = () => {
+      if (window.scrollY > 4) header.classList.add('shadow'); else header.classList.remove('shadow');
+    };
+    shadowToggle();
+    window.addEventListener('scroll', shadowToggle, { passive: true });
+
+    // IntersectionObserver for reveals
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Copy email utility
+    const email = 'hello@differenceengine.example';
+    document.getElementById('copyEmail')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(email);
+        const toast = document.getElementById('copyToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 1500);
+      } catch (_) {
+        alert(email);
+      }
+    });
+
+    // Prevent accidental navigation after mailto form submit
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', () => {
+      setTimeout(() => { form.reset(); }, 300);
+    });
+  </script>
+
+  <!-- Parallax & button caustics script -->
+  <script>
+    // Parallax driver (mouse + scroll)
+    const layers = Array.from(document.querySelectorAll('[data-speed]'));
+    if (layers.length) {
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) - 0.5; // -0.5..0.5
+        mouseY = (e.clientY / window.innerHeight) - 0.5;
+      }, { passive: true });
+      const animate = () => {
+        const sY = window.scrollY;
+        for (const el of layers) {
+          const speed = parseFloat(el.dataset.speed || '0.1');
+          const x = mouseX * 40 * speed;
+          const y = (sY * speed * 0.6) + mouseY * 30 * speed;
+          el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        }
+        requestAnimationFrame(animate);
+      };
+      animate();
+    }
+  </script>
+
+  <!-- Terminal simulation -->
+  <script>
+    (function () {
+      const el = document.getElementById('termOut');
+      if (!el) return;
+
+    // Command sequence to loop
+  
