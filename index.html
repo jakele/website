@@ -265,6 +265,16 @@
       animation: scroll 38s linear infinite;
     }
 
+    @media (max-width: 768px) {
+      .ticker-track {
+        animation: scroll 7s linear infinite;
+      }
+
+      .ticker-track:nth-child(2) {
+        animation-delay: -6s;
+      }
+    }
+
     .ticker-track:nth-child(2) {
       animation-delay: -19s;
     }
@@ -308,7 +318,7 @@
 
     /* Brand gradient text */
     .text-gradient {
-      background: linear-gradient(120deg, #E7B257 0%, #A1AE71 35%, #8597A9 65%, #9A5B52 100%);
+      background: #8597A9;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent
@@ -404,7 +414,6 @@
     </div>
     <div id="mobileMenu" class="md:hidden hidden border-t border-brand-gray/20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-2">
-        <a href="#contact" class="py-2">Contact</a>
         <a href="#contact"
           class="inline-flex items-center justify-center gap-2 btn-glass pop px-4 py-2 text-brand-slate shadow"><span
             class="btn-aura" aria-hidden="true"></span>Start a project<span aria-hidden>→</span></a>
@@ -435,8 +444,8 @@
             Minnesota software engineers building products that ship.
           </h1>
           <p class="mt-5 text-lg text-brand-gray max-w-xl">
-            ference Engine designs and develops production-ready software—web, mobile, and AI-powered systems—for
-            startups and enterprises across the North.
+            Difference Engine designs and develops production-ready software—web, mobile, and AI-powered systems—for
+            startups and enterprises across the North and beyond.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#contact" class="inline-flex items-center gap-2 btn-glass pop px-5 py-3 text-brand-slate"><span
@@ -506,11 +515,20 @@
             class="h-28 w-full object-cover rounded-lg" />
           <img data-speed="0.10" src="img/minneapolis-1824972_1280.jpg" alt="Stone Arch Bridge, Minneapolis"
             class="h-28 w-full object-cover rounded-lg" />
-          <img data-speed="0.14" src="img/waterfall-1350320_1280.jpg" alt="Boundary Waters pines and water"
+          <img data-speed="0.14" src="img/cherry-on-a-spoon-1545765_1280.jpg" alt="Cherry on a Spoon, Minneapolis"
             class="h-28 w-full object-cover rounded-lg" />
           <img data-speed="0.12" src="img/saint-paul-140199_1280.jpg" alt="Prairie and sky in western Minnesota"
             class="h-28 w-full object-cover rounded-lg" />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech stack section -->
+  <section class="pt-20 pb-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Technologies</h2>
       </div>
     </div>
   </section>
@@ -566,25 +584,25 @@
           <span class="chip">Ray</span>
         </div>
         <div class="ticker-track" aria-hidden="true">
-          <span class="chip">TypeScript</span>
-          <span class="chip">JavaScript</span>
-          <span class="chip">React</span>
-          <span class="chip">Next.js</span>
-          <span class="chip">React Native</span>
-          <span class="chip">Node.js</span>
-          <span class="chip">Python</span>
+          <span class="chip">.NET</span>
           <span class="chip">Django</span>
           <span class="chip">Flask</span>
           <span class="chip">Go</span>
-          <span class="chip">Kotlin</span>
-          <span class="chip">Swift</span>
-          <span class="chip">Java</span>
-          <span class="chip">.NET</span>
-          <span class="chip">PostgreSQL</span>
-          <span class="chip">MySQL</span>
-          <span class="chip">Redis</span>
-          <span class="chip">Kafka</span>
           <span class="chip">GraphQL</span>
+          <span class="chip">Java</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Kafka</span>
+          <span class="chip">Kotlin</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Python</span>
+          <span class="chip">React Native</span>
+          <span class="chip">React</span>
+          <span class="chip">Redis</span>
+          <span class="chip">Swift</span>
+          <span class="chip">TypeScript</span>
           <span class="chip">REST</span>
           <span class="chip">AWS</span>
           <span class="chip">Azure</span>
@@ -730,7 +748,6 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <header class="max-w-2xl reveal">
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Approach</h2>
-        <p class="mt-3 text-brand-gray">Small, senior teams. Weekly demos. Clear ownership. Source code from day one.
         </p>
       </header>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -785,7 +802,7 @@
         <p class="mt-3 text-brand-gray">Tell us what you're building. We’ll reply with a concise plan and timeline.</p>
       </header>
       <div class="mt-10 reveal rounded-2xl border border-brand-gray/30 p-6 bg-white shadow-sm">
-        <form id="contactForm" class="grid gap-4" action="mailto:hello@differenceengine.example" method="post"
+        <form id="contactForm" class="grid gap-4" action="mailto:hello@differenceeng.com" method="post"
           enctype="text/plain">
           <div class="grid gap-2">
             <label for="name" class="text-sm font-medium">Name</label>
@@ -811,8 +828,8 @@
               aria-label="Copy email address">Copy email</button>
             <span id="copyToast" class="hidden text-sm text-brand-green">Copied.</span>
           </div>
-          <p class="text-xs text-brand-gray">Prefer your own client? Email <a
-              href="mailto:hello@differenceengine.example" class="underline">hello@differenceengine.example</a>.</p>
+          <p class="text-xs text-brand-gray">Prefer your own client? Email <a href="mailto:hello@differenceeng.com"
+              class="underline">hello@differenceeng.com</a>.</p>
         </form>
       </div>
     </div>
@@ -822,7 +839,7 @@
   <footer class="py-10 border-t border-brand-gray/20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2">
-        <img src="img/Logo-square.png" alt="Difference Engine" class="h-6 w-6 rounded-md shadow-sm" />
+        <img src="img/logo-square.png" alt="Difference Engine" class="h-6 w-6 rounded-md shadow-sm" />
         <span class="font-semibold">Difference&nbsp;Engine</span>
       </div>
       <nav class="text-sm flex items-center gap-5">
@@ -866,7 +883,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Copy email utility
-    const email = 'hello@differenceengine.example';
+    const email = 'hello@differenceeng.com';
     document.getElementById('copyEmail')?.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(email);

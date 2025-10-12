@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Difference Engine — Team</title>
+  <meta name="description" content="Single employee profile." />
+  <meta property="og:title" content="Difference Engine — Team" />
+  <meta property="og:description" content="Single employee profile." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og.png" />
+  <meta name="theme-color" content="#E7B257" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Junicode:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Junicode', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular']
+          },
+          colors: {
+            brand: {
+              gold: '#E7B257',
+              olive: '#A1AE71',
+              'slate-blue': '#8597A9',
+              brick: '#9A5B52',
+              gray: '#585F66',
+              white: '#FAF9F4',
+              slate: '#2C343C',
+              ivory: '#EAE9E2',
+            }
+          },
+          boxShadow: {
+            glass: '0 10px 30px -10px rgba(231,178,87,0.35)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .btn-glass {
+      position: relative;
+      isolation: isolate;
+      border-radius: .9rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .45)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .28) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .18) 0%, transparent 60%),
+        radial-gradient(100% 100% at 50% 100%, rgba(133, 151, 169, .12) 0%, transparent 50%);
+      border: 1px solid rgba(231, 178, 87, .65);
+      -webkit-backdrop-filter: blur(12px) saturate(170%);
+      backdrop-filter: blur(12px) saturate(170%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 4px 20px -4px rgba(231, 178, 87, .25);
+      transition: transform .18s ease, filter .18s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .btn-glass:hover {
+      transform: translateY(-1px);
+      filter: saturate(125%);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .52)),
+        radial-gradient(120% 180% at 12% 8%, rgba(231, 178, 87, .38) 0%, transparent 60%),
+        radial-gradient(120% 180% at 88% -8%, rgba(161, 174, 113, .25) 0%, transparent 60%),
+        radial-gradient(100% 100% at 50% 100%, rgba(133, 151, 169, .18) 0%, transparent 50%);
+      border-color: rgba(231, 178, 87, .85);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 8px 25px -6px rgba(231, 178, 87, .35);
+    }
+  </style>
+</head>
+
+<body
+  class="font-serif min-h-screen bg-brand-white text-brand-slate selection:bg-brand-gold/60 selection:text-brand-slate">
+  <!-- Skip link -->
+  <a href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-white/90 focus:backdrop-blur focus:rounded-md focus:px-3 focus:py-2 focus:ring focus:ring-brand-gold/60">Skip
+    to content</a>
+
+  <!-- Header (nav unchanged) -->
+  <header id="header"
+    class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-brand-white/75 bg-brand-white/85 border-b border-brand-gold/25">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#home" class="flex items-center gap-2 group" aria-label="Difference Engine home">
+          <img src="img/logo-square.png" alt="Difference Engine"
+            class="h-7 w-7 rounded-md shadow-sm group-hover:rotate-6 transition" />
+          <span class="font-extrabold tracking-tight text-lg">Difference&nbsp;Engine</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm"></nav>
+        <div class="flex items-center gap-3">
+          <a href="#contact" class="hidden sm:inline-flex items-center gap-2 btn-glass px-4 py-2 text-brand-slate">Start
+            a project<span aria-hidden>→</span></a>
+          <button id="menuBtn"
+            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 hover:bg-brand-ivory/60"
+            aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-brand-gray/20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-2">
+        <a href="#contact" class="py-2">Contact</a>
+        <a href="#contact"
+          class="inline-flex items-center justify-center gap-2 btn-glass px-4 py-2 text-brand-slate shadow">Start a
+          project<span aria-hidden>→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Single Employee Profile -->
+  <main id="main" class="py-14 sm:py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Team</h1>
+        <p class="mt-3 text-brand-gray">Meet the people building your product.</p>
+      </header>
+
+      <section aria-label="Employee profile" class="mt-10">
+        <article
+          class="grid gap-8 lg:grid-cols-[280px_1fr] items-start rounded-3xl border border-brand-gray/30 bg-white p-6 sm:p-8">
+          <!-- Avatar (round) -->
+          <div class="flex flex-col items-center text-center gap-4">
+            <div class="relative">
+              <!-- Replace src with your image; will render round -->
+              <img src="img/profile-placeholder.jpg" alt="Profile photo of Jeffrey Kern"
+                class="h-48 w-48 rounded-full object-cover ring-2 ring-brand-gold/40 shadow-md" />
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold leading-tight">Jeffrey Kern</h2>
+              <p class="text-brand-gray">Senior Software Engineer • Minnesota</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+              <a href="#contact" class="btn-glass px-4 py-2 text-sm text-brand-slate">Work with Jeffrey<span
+                  aria-hidden>→</span></a>
+            </div>
+          </div>
+
+          <!-- Contact + Bio -->
+          <div class="grid gap-6">
+            <section aria-label="Contact information" class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-brand-gray/30 p-4">
+                <h3 class="font-semibold mb-3">Contact</h3>
+                <ul class="space-y-2 text-sm">
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 12H8m8 0a8 8 0 11-16 0 8 8 0 0116 0z" />
+                    </svg>
+                    <span>Role: Senior Software Engineer</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6" />
+                    </svg>
+                    <a class="underline break-all"
+                      href="mailto:jeffrey@differenceengine.example">jeffrey@differenceengine.example</a>
+                    <button id="copyEmail" class="ml-auto text-xs underline">Copy</button>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 5h18M3 19h18M4 5v14" />
+                    </svg>
+                    <a class="underline" href="tel:+16125550123">+1 (612) 555-0123</a>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 11c1.657 0 3-1.79 3-4s-1.343-4-3-4-3 1.79-3 4 1.343 4 3 4zM19.4 21a8.4 8.4 0 10-14.8 0" />
+                    </svg>
+                    <span>Minneapolis–Saint Paul, MN</span>
+                  </li>
+                </ul>
+                <p id="copyToast" class="hidden mt-2 text-xs text-green-700">Email copied.</p>
+              </div>
+
+              <div class="rounded-2xl border border-brand-gray/30 p-4">
+                <h3 class="font-semibold mb-3">Links</h3>
+                <ul class="space-y-2 text-sm">
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 4h6v6M10 14L20 4M5 19h14" />
+                    </svg>
+                    <a class="underline break-all" href="https://differenceengine.example" target="_blank"
+                      rel="noopener">Website</a>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 8a6 6 0 11-12 0 6 6 0 0112 0zM20 20l-4-4" />
+                    </svg>
+                    <a class="underline" href="https://www.linkedin.com/in/jeffreykern" target="_blank"
+                      rel="noopener">LinkedIn</a>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19c-4.97 1.5-4.97-2.5-7-3m14 3v-2a4 4 0 00-1-2.5c3 0 5-2 5-5a5 5 0 00-.14-1.14A4 4 0 0019 6s-1.5-.5-4 1.5a13.9 13.9 0 00-6 0C6.5 5.5 5 6 5 6a4 4 0 00-.86 2.36A5 5 0 004 11c0 3 2 5 5 5a4 4 0 01-1 2.5v2" />
+                    </svg>
+                    <a class="underline" href="https://github.com/jeffreykern" target="_blank" rel="noopener">GitHub</a>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8M8 11h8M8 15h5" />
+                    </svg>
+                    <a class="underline" href="https://cal.com/jeffrey" target="_blank" rel="noopener">Book a call</a>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <section aria-label="About Jeffrey" class="rounded-2xl border border-brand-gray/30 p-4">
+              <h3 class="font-semibold mb-3">About</h3>
+              <p class="text-sm text-brand-gray">
+                Senior product engineer focused on React/React Native, TypeScript, Node, and Python.
+                Designs pragmatic architectures, ships iteratively, and measures outcomes with real metrics.
+              </p>
+            </section>
+
+            <section aria-label="Expertise" class="rounded-2xl border border-brand-gray/30 p-4">
+              <h3 class="font-semibold mb-3">Expertise</h3>
+              <p class="text-sm text-brand-gray">
+                React • Next.js • React Native • Node • Python • GraphQL/REST • PostgreSQL • AWS •
+                CI/CD • Testing (Jest/Playwright) • LLM features, retrieval, and agents.
+              </p>
+            </section>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <!-- Contact (kept) -->
+  <section id="contact" class="py-20 bg-brand-ivory/30">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Start a project</h2>
+        <p class="mt-3 text-brand-gray">Tell us what you're building. We’ll reply with a concise plan and timeline.</p>
+      </header>
+      <div class="mt-10 rounded-2xl border border-brand-gray/30 p-6 bg-white shadow-sm">
+        <form id="contactForm" class="grid gap-4" action="mailto:hello@differenceengine.example" method="post"
+          enctype="text/plain">
+          <div class="grid gap-2">
+            <label for="name" class="text-sm font-medium">Name</label>
+            <input id="name" name="name" required placeholder="Your name"
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40" />
+          </div>
+          <div class="grid gap-2">
+            <label for="email" class="text-sm font-medium">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com"
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40" />
+          </div>
+          <div class="grid gap-2">
+            <label for="msg" class="text-sm font-medium">Project brief</label>
+            <textarea id="msg" name="message" rows="5" required
+              placeholder="A few lines on goals, constraints, and timing."
+              class="rounded-xl border border-brand-gray/30 bg-white px-4 py-2 outline-none focus:ring focus:ring-brand-gold/40"></textarea>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="submit" class="inline-flex items-center gap-2 btn-glass px-5 py-3 text-brand-slate">Send
+              email</button>
+            <button type="button" id="copyAgencyEmail"
+              class="inline-flex items-center gap-2 rounded-xl border border-brand-gray/30 px-4 py-2 hover:bg-brand-ivory"
+              aria-label="Copy email address">Copy email</button>
+            <span id="copyAgencyToast" class="hidden text-sm text-green-700">Copied.</span>
+          </div>
+          <p class="text-xs text-brand-gray">Prefer your own client? Email <a
+              href="mailto:hello@differenceengine.example" class="underline">hello@differenceengine.example</a>.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 border-t border-brand-gray/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <img src="img/Logo-square.png" alt="Difference Engine" class="h-6 w-6 rounded-md shadow-sm" />
+        <span class="font-semibold">Difference&nbsp;Engine</span>
+      </div>
+      <nav class="text-sm flex items-center gap-5">
+        <a href="#contact" class="hover:underline">Contact</a>
+      </nav>
+      <p class="text-xs text-brand-gray">© <span id="year"></span> Difference Engine, Minnesota.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts (nav + copy utils + year) -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+
+    // Header shadow on scroll
+    const header = document.getElementById('header');
+    const shadowToggle = () => {
+      if (window.scrollY > 4) header.classList.add('shadow'); else header.classList.remove('shadow');
+    };
+    shadowToggle();
+    window.addEventListener('scroll', shadowToggle, { passive: true });
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Copy Jeffrey email
+    const je = 'jeffrey@differenceengine.example';
+    document.getElementById('copyEmail')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(je);
+        const toast = document.getElementById('copyToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 1500);
+      } catch (_) { alert(je); }
+    });
+
+    // Copy agency email
+    const agency = 'hello@differenceengine.example';
+    document.getElementById('copyAgencyEmail')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(agency);
+        const toast = document.getElementById('copyAgencyToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 1500);
+      } catch (_) { alert(agency); }
+    });
+  </script>
+</body>
+
+</html>
